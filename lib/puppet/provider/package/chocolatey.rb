@@ -135,11 +135,7 @@ Puppet::Type.type(:package).provide(:chocolatey, parent: Puppet::Provider::Packa
       args << @resource[:name][%r{\A\S*}]
     else
       args.clear
-      args << if choco_exe
-                'upgrade'
-              else
-                'update'
-              end
+      args << 'upgrade'
 
       # Add the package version
       args << @resource[:name][%r{\A\S*}] << '--version' << should
@@ -212,11 +208,7 @@ Puppet::Type.type(:package).provide(:chocolatey, parent: Puppet::Provider::Packa
 
     args = []
 
-    if choco_exe
-      args << 'upgrade' << @resource[:name][%r{\A\S*}] << '-y'
-    else
-      args << 'update' << @resource[:name][%r{\A\S*}]
-    end
+    args << 'upgrade' << @resource[:name][%r{\A\S*}] << '-y'
 
     if @resource[:source]
       args << '--source' << @resource[:source]
